@@ -1,1 +1,1 @@
-web: bin/hubot --adapter hipchat --name cagebot
+web: bin/hubot --name cagebot
