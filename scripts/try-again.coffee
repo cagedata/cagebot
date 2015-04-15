@@ -11,6 +11,6 @@
 #   davejlong
 
 module.exports = (robot) ->
-  robot.head /try\s?again/i, (msg) ->
+  robot.hear /try\s?again/i, (msg) ->
     msg.send 'No'
 
