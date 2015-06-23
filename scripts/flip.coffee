@@ -48,3 +48,14 @@ module.exports = (robot) ->
 
     msg.send "#{unflipped} ノ( º _ ºノ)"
 
+  robot.respond /please respect tables( .*)?$/i, (msg) ->
+    toUnflip = (msg.match[1] || '').trim()
+
+    if toUnflip == 'me'
+      unflipped = msg.message.user.name
+    else if toUnflip == ''
+      unflipped = '┬──┬'
+    else
+      unflipped = toUnflip
+
+    msg.send "#{unflipped} ノ( º _ ºノ)"
