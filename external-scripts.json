@@ -9,5 +9,9 @@
   "hubot-redis-brain",
   "hubot-rules",
   "hubot-shipit",
-  "hubot-youtube"
+  "hubot-youtube",
+  "hubot-ambush",
+  "hubot-explainshell",
+  "hubot-standup-alarm",
+  "hubot-business-cat"
 ]
