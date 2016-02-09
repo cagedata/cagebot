@@ -1,6 +1,6 @@
 PlayMusic = require "playmusic"
 pm = new PlayMusic()
-pm.init {email: "david.long03@gmail.com", password: "rfxssfmzwowbnrcr"}, (err) ->
+pm.init {email: process.env.HUBOT_GOOGLE_MUSIC_USERNAME, password: process.env.HUBOT_GOOGLE_MUSIC_PASSWORD}, (err) ->
   console.error(err) if err
 
 module.exports = (robot) ->
