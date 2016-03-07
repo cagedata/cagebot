@@ -15,12 +15,11 @@
 #   Dave Long <dlong@cagedata.com>
 
 module.exports = (robot) ->
-  robot.respond /ack\s(\d+)\s(\s+)/i, (msg) ->
+  robot.respond /ack\s(\d+)\s(\w+)/i, (msg) ->
     data = {
       userName: msg.match[2],
       incidentNames: [msg.match[1]]
     }
-    console.log(msg)
     msg.http("https://api.victorops.com/api-public/v1/incidents/ack")
     .header("X-VO-Api-Id", process.env.HUBOT_VICTOR_OPS_ID)
     .header("X-VO-Api-Key", process.env.HUBOT_VICTOR_OPS_KEY)
@@ -28,6 +27,8 @@ module.exports = (robot) ->
     .patch(JSON.stringify(data)) (err, res, body) ->
       if res.status_code == 200
         msg.reply "Incident #{msg.match[1]} acked"
+      else
+        console.log(body)
   robot.respond /incidents/i, (msg) ->
     msg.http("https://api.victorops.com/api-public/v1/incidents")
     .header("X-VO-Api-Id", process.env.HUBOT_VICTOR_OPS_ID)
