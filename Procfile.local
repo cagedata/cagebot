@@ -1,2 +1,2 @@
 redis: redis-server
-cagebot: bin/hubot --name cagebot
+cagebot: bin/hubot --name cagebot --adapter hipchat

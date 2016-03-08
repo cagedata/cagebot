@@ -7,6 +7,7 @@
 # Configuration:
 #   HUBOT_VICTOR_OPS_ID
 #   HUBOT_VICTOR_OPS_KEY
+#   HUBOT_VICTOR_OPS_MAP
 # Commands:
 #   hubot ack <incident number> <VictorOps user> - Acks issue in VictorOps
 #   hubot incidents - Lists all open incidents
@@ -15,9 +16,12 @@
 #   Dave Long <dlong@cagedata.com>
 
 module.exports = (robot) ->
-  robot.respond /ack\s(\d+)\s(\w+)/i, (msg) ->
+  userMap = JSON.parse process.env.HUBOT_VICTOR_OPS_MAP
+
+  robot.respond /ack\s(\d+)/i, (msg) ->
+    username = userMap[msg.message.user.reply_to.match(/_(\d+)\@/)[1]]
     data = {
-      userName: msg.match[2],
+      userName: username,
       incidentNames: [msg.match[1]]
     }
     msg.http("https://api.victorops.com/api-public/v1/incidents/ack")
@@ -25,10 +29,13 @@ module.exports = (robot) ->
     .header("X-VO-Api-Key", process.env.HUBOT_VICTOR_OPS_KEY)
     .header("Content-Type", "application/json")
     .patch(JSON.stringify(data)) (err, res, body) ->
+      body = JSON.parse body
       if res.status_code == 200
         msg.reply "Incident #{msg.match[1]} acked"
       else
-        console.log(body)
+        body.results.forEach (incident) ->
+          console.log(incident)
+          msg.reply "Incident #{incident.incidentNumber}: #{incident.message}"
   robot.respond /incidents/i, (msg) ->
     msg.http("https://api.victorops.com/api-public/v1/incidents")
     .header("X-VO-Api-Id", process.env.HUBOT_VICTOR_OPS_ID)
