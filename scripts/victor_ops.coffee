@@ -18,11 +18,11 @@
 module.exports = (robot) ->
   userMap = JSON.parse process.env.HUBOT_VICTOR_OPS_MAP
 
-  robot.respond /ack\s(\d+)/i, (msg) ->
-    console.log(msg.message.user.reply_to)
-    username = userMap[msg.message.user.reply_to.match(/_(\d+)\@/)[1]]
+  robot.respond /ack\s(\d+)\s(\w+)/i, (msg) ->
+    # console.log(msg.message.user)
+    # username = userMap[msg.message.user.reply_to.match(/_(\d+)\@/)[1]]
     data = {
-      userName: username,
+      userName: msg.match[2],
       incidentNames: [msg.match[1]]
     }
     msg.http("https://api.victorops.com/api-public/v1/incidents/ack")
