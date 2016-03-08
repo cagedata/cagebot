@@ -19,6 +19,7 @@ module.exports = (robot) ->
   userMap = JSON.parse process.env.HUBOT_VICTOR_OPS_MAP
 
   robot.respond /ack\s(\d+)/i, (msg) ->
+    console.log(msg.message.user.reply_to)
     username = userMap[msg.message.user.reply_to.match(/_(\d+)\@/)[1]]
     data = {
       userName: username,
