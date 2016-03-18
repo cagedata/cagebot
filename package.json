@@ -10,7 +10,6 @@
     "htmlparser": "^1.7.6",
     "hubot": "^2.9.3",
     "hubot-slack": "^3.4.2",
-    "hubot-hipchat": "^2.12.0",
     "hubot-ambush": "0.0.3",
     "hubot-business-cat": "^1.4.1",
     "hubot-diagnostics": "0.0.1",
