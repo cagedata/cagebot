@@ -13,5 +13,6 @@
   "hubot-ambush",
   "hubot-explainshell",
   "hubot-standup-alarm",
-  "hubot-business-cat"
+  "hubot-business-cat",
+  "hubot-jira"
 ]
