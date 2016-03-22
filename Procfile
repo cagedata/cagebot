@@ -1,1 +1,1 @@
-web: bin/hubot --name cagebot --adapter hipchat
+web: bin/hubot --name cagebot --adapter slack
