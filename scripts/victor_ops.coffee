@@ -42,4 +42,4 @@ module.exports = (robot) ->
     .get() (err, res, body) ->
       data = JSON.parse body
       data.incidents.forEach (incident) ->
-        msg.send "(#{incident.currentPhase}) #{incident.entityDisplayName}"
+        msg.send "(#{incident.currentPhase}) #{incident.entityId}"
