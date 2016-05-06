@@ -44,7 +44,9 @@ module.exports = (robot) ->
     .get() (err, res, body) ->
       data = JSON.parse body
       data.incidents.forEach (incident) ->
+        resolved", "triggered" or "acknowledged
+        return if incident.currentPhase =~ /resolved/i
         if incident.entityDisplayName.length
-          msg.send "Incident #{incident.incidentNumber} acked: #{incident.entityDisplayName}"
+          msg.send "Incident #{incident.incidentNumber} #{incident.currentPhase}: #{incident.entityDisplayName}"
         else
-          msg.send "Incident #{incident.incidentNumber} acked: #{incident.entityId}"
+          msg.send "Incident #{incident.incidentNumber} #{incident.currentPhase}: #{incident.entityId}"
