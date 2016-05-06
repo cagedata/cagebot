@@ -44,8 +44,7 @@ module.exports = (robot) ->
     .get() (err, res, body) ->
       data = JSON.parse body
       data.incidents.forEach (incident) ->
-        resolved", "triggered" or "acknowledged
-        return true if incident.currentPhase.toLowerCase() == "resolved"
+        return if incident.currentPhase.toLowerCase() == "resolved"
         if incident.entityDisplayName.length
           msg.send "Incident #{incident.incidentNumber} #{incident.currentPhase}: #{incident.entityDisplayName}"
         else
