@@ -33,8 +33,10 @@ module.exports = (robot) ->
         msg.reply "Incident #{msg.match[1]} acked"
       else
         body.results.forEach (incident) ->
-          console.log(incident)
-          msg.reply "Incident #{incident.incidentNumber}: #{incident.message}"
+          if incident.entityDisplayName.length
+            msg.reply "Incident #{incident.incidentNumber} acked: #{incident.entityDisplayName}"
+          else
+            msg.reply "Incident #{incident.incidentNumber} acked: #{incident.entityId}"
   robot.respond /incidents/i, (msg) ->
     msg.http("https://api.victorops.com/api-public/v1/incidents")
     .header("X-VO-Api-Id", process.env.HUBOT_VICTOR_OPS_ID)
@@ -42,4 +44,7 @@ module.exports = (robot) ->
     .get() (err, res, body) ->
       data = JSON.parse body
       data.incidents.forEach (incident) ->
-        msg.send "(#{incident.currentPhase}) #{incident.entityId}"
+        if incident.entityDisplayName.length
+          msg.send "Incident #{incident.incidentNumber} acked: #{incident.entityDisplayName}"
+        else
+          msg.send "Incident #{incident.incidentNumber} acked: #{incident.entityId}"
