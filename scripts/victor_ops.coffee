@@ -42,10 +42,17 @@ module.exports = (robot) ->
     .header("X-VO-Api-Id", process.env.HUBOT_VICTOR_OPS_ID)
     .header("X-VO-Api-Key", process.env.HUBOT_VICTOR_OPS_KEY)
     .get() (err, res, body) ->
-      data = JSON.parse body
-      data.incidents.forEach (incident) ->
-        return if incident.currentPhase.toLowerCase() == "resolved"
-        if incident.entityDisplayName.length
-          msg.send "Incident #{incident.incidentNumber} #{incident.currentPhase}: #{incident.entityDisplayName}"
+      data = JSON.parse(body).incidents.filter (incident) ->
+        if incident.currentPhase.toLowerCase() == "resolved"
+          false
         else
-          msg.send "Incident #{incident.incidentNumber} #{incident.currentPhase}: #{incident.entityId}"
+          true
+      if data.length
+        data.incidents.forEach (incident) ->
+          return if incident.currentPhase.toLowerCase() == "resolved"
+          if incident.entityDisplayName.length
+            msg.send "Incident #{incident.incidentNumber} #{incident.currentPhase}: #{incident.entityDisplayName}"
+          else
+            msg.send "Incident #{incident.incidentNumber} #{incident.currentPhase}: #{incident.entityId}"
+      else
+        msg.send "Hooray! No incidents!"
