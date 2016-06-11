@@ -24,7 +24,7 @@ module.exports = (robot) ->
   ignoreUsers = process.env.HUBOT_JIRA_ISSUES_IGNORE_USERS || "jira|github"
   auth = "#{process.env.HUBOT_JIRA_USERNAME}:#{process.env.HUBOT_JIRA_PASSWORD}"
 
-  robot.hear /\b[a-zA-Z]{2,12}-[0-9]{1,10}\b/, (msg) ->
+  robot.hear /\b([a-zA-Z]{2,12}-[0-9]{1,10})\b/, (msg) ->
     return if msg.message.user.name.match(new RegExp(ignoreUsers, "gi"))
     issue = msg.match[1]
     robot.http("#{process.env.HUBOT_JIRA_URL}/rest/api/2/issue/#{issue}")
