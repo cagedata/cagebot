@@ -83,4 +83,5 @@ module.exports = (robot) ->
 
           msg.send message
       catch error
-        msg.send "[*ERROR*] #{error}"
+        console.log "[*ERROR*] #{error}"
+        # msg.send "[*ERROR*] #{error}"
