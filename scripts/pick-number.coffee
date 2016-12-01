@@ -16,42 +16,33 @@
 # Author:
 #   crayzeigh
 
-# declare the number to make it not null
-number = 42
-
-
 module.exports = (robot) ->
-
   robot.respond /pick a number(( between)? ((-)?[0-9]+) (and|to) ((-)?[0-9]+))?/i, (msg) ->
-    # Do something if no range is specified
-#    unless msg.match[1]?
-#      min = process.env.HUBOT_DEFAULT_MIN || 1
-#      max = process.env.HUBOT_DEFAULT_MAX || 10
-#      number = Math.floor(Math.random() * max - min + 1) + min
-#      msg.send(reply(number))
-
     # Check for the existence of a specified range
     if msg.match[1]?
-    # get integers from strings
+    # get integers from string matches
       min = parseInt(msg.match[3], 10)
       max = parseInt(msg.match[6], 10)
+      # Swap numbers if the order is backwards
       if min > max
         [min, max] = [max, min]
         msg.send "I'll assume you meant #{min} to #{max}..."
     else
+      # get default values if none are specified
       min = process.env.HUBOT_DEFAULT_MIN || 1
       max = process.env.HUBOT_DEFAULT_MAX || 10
     number = Math.floor(Math.random() * (max - min + 1)) + min
     msg.send(reply(number))
 
+# Creates some humanized replies instead of just raw number output.
 reply = (number) ->
   replies[(Math.random() * replies.length) >> 0].replace(/{number}/, number)
 
 replies = [
-  "Can you use {number}?",
+  "Maybe, {number}?",
   "How about... {number}.",
   "{number}!",
   "{number}",
-  "Will {number} work?",
-  "no you"
+  "Um... {number}",
+  ":grumpycat:"
 ]
