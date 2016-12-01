@@ -19,32 +19,39 @@
 # declare the number to make it not null
 number = 42
 
-#Build some varied response for humanization
-reply = [
-  "Can you use #{number}?",
-  "How about... #{number}.",
-  "#{number}!",
-  "#{number}",
-  "Will #{number} work?",
-  "no you"
-]
 
 module.exports = (robot) ->
-  robot.respond /pick a number(( between)? ([0-9]+) (and|to) ([0-9]+))?/i, (msg) ->
+
+  robot.respond /pick a number(( between)? ((-)?[0-9]+) (and|to) ((-)?[0-9]+))?/i, (msg) ->
     # Do something if no range is specified
-    unless msg.match[1]?
+#    unless msg.match[1]?
+#      min = process.env.HUBOT_DEFAULT_MIN || 1
+#      max = process.env.HUBOT_DEFAULT_MAX || 10
+#      number = Math.floor(Math.random() * max - min + 1) + min
+#      msg.send(reply(number))
+
+    # Check for the existence of a specified range
+    if msg.match[1]?
+    # get integers from strings
+      min = parseInt(msg.match[3], 10)
+      max = parseInt(msg.match[6], 10)
+      if min > max
+        [min, max] = [max, min]
+        msg.send "I'll assume you meant #{min} to #{max}..."
+    else
       min = process.env.HUBOT_DEFAULT_MIN || 1
       max = process.env.HUBOT_DEFAULT_MAX || 10
-      number = Math.floor(Math.random() * max - min) + min
-      msg.send msg.random reply
+    number = Math.floor(Math.random() * (max - min + 1)) + min
+    msg.send(reply(number))
 
-    # Swap min and max if someone types numbers in an less than expected way
-    if msg.match[3] > msg.match[5]
-      min = msg.match[5]
-      max = msg.match[3]
-      msg.send "I'll assume you meant #{min} to #{max}..."
-    else
-      min = msg.match[3]
-      max = msg.match[5]
-    number = Math.floor(Math.random() * max - min) + min
-    msg.send msg.random reply
+reply = (number) ->
+  replies[(Math.random() * replies.length) >> 0].replace(/{number}/, number)
+
+replies = [
+  "Can you use {number}?",
+  "How about... {number}.",
+  "{number}!",
+  "{number}",
+  "Will {number} work?",
+  "no you"
+]
