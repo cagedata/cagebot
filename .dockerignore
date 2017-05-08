@@ -1,0 +1,9 @@
+.git
+Dockerfile
+.gitignore
+.env
+env.example
+Procfile*
+README.md
+node_modules
+.editorconfig
