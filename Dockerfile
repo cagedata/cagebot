@@ -1,9 +1,9 @@
-FROM node:0.10.48
+FROM node:6.11.1
 MAINTAINER Dave Long <dlong@cagedata.com>
 
 WORKDIR /hubot
 
-COPY package.json .
+COPY package*.json ./
 
 RUN npm install
 
