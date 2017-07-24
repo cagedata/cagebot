@@ -22,7 +22,6 @@
     "hubot-scripts": "^2.17.2",
     "hubot-shipit": "^0.2.1",
     "hubot-slack": "^4.3.4",
-    "hubot-standup": "^0.1.8",
     "hubot-standup-alarm": "0.1.0",
     "hubot-youtube": "^1.0.2"
   },
