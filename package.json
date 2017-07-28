@@ -4,6 +4,9 @@
   "private": true,
   "author": "Dave Long <david@cagedata.com>",
   "description": "A simple helpful robot for your Company",
+  "script": {
+    "start": "hubot"
+  },
   "dependencies": {
     "coffee-script": "~> 1.12.7",
     "flip": "^1.0.0",
