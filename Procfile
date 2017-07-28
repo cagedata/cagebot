@@ -1,1 +1,1 @@
-web: bin/hubot --name cagebot --adapter slack
+web: npm start

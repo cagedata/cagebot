@@ -5,7 +5,7 @@
   "author": "Dave Long <david@cagedata.com>",
   "description": "A simple helpful robot for your Company",
   "scripts": {
-    "start": "hubot"
+    "start": "hubot --adapter slack --name cagebot"
   },
   "dependencies": {
     "coffee-script": "~> 1.12.7",
