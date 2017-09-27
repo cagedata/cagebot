@@ -1,1 +1,1 @@
-web: npm start
+web: torus run -e heroku -- npm start
